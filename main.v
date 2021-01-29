@@ -12,23 +12,22 @@ Author : Akhil Kapadia
 
 module main (
     input clk,
-    input [1:0] sw,
-    output pwm1,
-    output pwm2
+    input [3:0] sw,
+    output [1:0] pwm
 );
+     reg [15:0] duty;
 
 
-     //pwm 1: Period of the full 16 bits and a duty cycle of 40%
-     //65535 * 0.40 = 26214
-     pwm #(17,  65535)
+     //pwm 1: Period of 2000000 ns or 50 Hz and a width of 1 ms.
+     pwm #(21,  2000000)    //50 Hz pulse
      wave1(
           .clk(clk),
-          .duty(26214),
+          .duty(1000000),   // 1 ms pulse width
           .pulse(pulse1)
      );
 
-     //pwm 2: Create a period of 1 ms and a duty cycle of 10%
-     pwm #(17,  100000)
+     //pwm 2: Create a period of 1 ms and various duty cycles
+     pwm #(16,  100000)
      wave2(
           .clk(clk),
           .duty(10000),
@@ -36,7 +35,17 @@ module main (
      );
      
      //Send out the pulses
-     assign pwm1 = (sw[0]) ? pulse1:0;
-     assign pwm2 = (sw[1]) ? pulse2:0;
+     assign pwm = (sw[0]) ? {pulse1, pulse2}: 2'b0;
      
+     //change the speed
+     always @(posedge clk ) begin
+          case (sw[3:1])
+               3'b000: duty = 0;     //0%
+               3'b001: duty = 50000; //50%
+               3'b010: duty = 75000; //75%
+               3'b100: duty = 95000; //95%
+               default: duty = 0;
+          endcase
+     end
+          
 endmodule

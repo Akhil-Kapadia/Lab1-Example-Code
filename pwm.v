@@ -11,12 +11,10 @@ The input "duty" is the duration of the pulse width and duty/period can be used 
 duty cycle.
 -------------------------------------------------------
 Author : Akhil Kapadia
-Based off code made by Rice Rodriguez
-https://github.com/ricerodriguez/ttu-lab1-code-examples/blob/master/part1-clocks-and-counters/example3_pwm.v
 -------------------------------------------------------
 */
 //Instantiate the module and declare inputs, output, and/or parameters.
-module pwm #(parameter SIZE = 12, PERIOD = 4095)
+module pwm #(parameter SIZE = 8, PERIOD = 255)
 (input clk,
 input [SIZE-1:0] duty,	
 output reg pulse);
