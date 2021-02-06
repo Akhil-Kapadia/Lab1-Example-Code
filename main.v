@@ -12,7 +12,7 @@ Author : Akhil Kapadia
 
 module main (
     input clk,
-    input [3:0] sw,
+    input [4:0] sw,
     output [1:0] pwm
 );
      reg [15:0] duty;
@@ -30,7 +30,7 @@ module main (
      pwm #(16,  100000)
      wave2(
           .clk(clk),
-          .duty(10000),
+          .duty(duty),
           .pulse(pulse2)
      );
      
@@ -39,11 +39,11 @@ module main (
      
      //change the speed
      always @(posedge clk ) begin
-          case (sw[3:1])
-               3'b000: duty = 0;     //0%
-               3'b001: duty = 50000; //50%
-               3'b010: duty = 75000; //75%
-               3'b100: duty = 95000; //95%
+          case (sw[4:1])
+               4'b0001: duty = 25000;     //25%
+               4'b0010: duty = 50000; //50%
+               4'b0100: duty = 75000; //75%
+               4'b1000: duty = 95000; //95%
                default: duty = 0;
           endcase
      end
