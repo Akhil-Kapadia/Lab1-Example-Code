@@ -16,6 +16,7 @@ module main (
     output [1:0] pwm
 );
      reg [15:0] duty;
+     wire [1:0] pulse;
 
 
      //pwm 1: Period of 2000000 ns or 50 Hz and a width of 1 ms.
@@ -23,23 +24,24 @@ module main (
      wave1(
           .clk(clk),
           .duty(1000000),   // 1 ms pulse width
-          .pulse(pulse1)
+          .pulse(pulse[0])
      );
 
      //pwm 2: Create a period of 1 ms and various duty cycles
      pwm #(16,  100000)
      wave2(
-          .clk(clk),
+          .clk(clk),     //Name of var in the submodule and what you want to send in the parenthesis.
           .duty(duty),
-          .pulse(pulse2)
+          .pulse(pulse[1])
      );
      
-     //Send out the pulses
-     assign pwm = (sw[0]) ? {pulse1, pulse2}: 2'b0;
+     //Send out the pulses    //{} is how you concatenate bits
+     assign pwm = (sw[0]) ? {pulse[1], pulse[0]}: 2'b0;
      
      //change the speed
      always @(posedge clk ) begin
           case (sw[4:1])
+               //Binary notation. 4b0001 Means switch 1 is turned on while the others are off.
                4'b0001: duty = 25000;     //25%
                4'b0010: duty = 50000; //50%
                4'b0100: duty = 75000; //75%

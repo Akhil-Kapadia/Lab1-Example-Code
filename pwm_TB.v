@@ -22,9 +22,9 @@ module pwm_tb();
      //pwm module with default period and size.     
      pwm #(8, 255)
      wave1(
-          .clk(clk),
-          .duty(duty),
-          .pulse(pulse)
+          .clk (clk),
+          .duty (duty),
+          .pulse (pulse)
      );
 
      initial begin
