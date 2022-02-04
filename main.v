@@ -15,23 +15,26 @@ module main (
     input [4:0] sw,
     output [1:0] pwm
 );
-     reg [15:0] duty;
+     reg [15:0] pulsewidth;
      wire [1:0] pulse;
-
+     
+     initial begin
+          duty = 0;
+     end
 
      //pwm 1: Period of 2000000 ns or 50 Hz and a width of 1 ms.
      pwm #(21,  2000000)    //50 Hz pulse
      wave1(
           .clk(clk),
           .duty(1000000),   // 1 ms pulse width
-          .pulse(pulse[0])
+          .pulse(pwm[0])
      );
 
      //pwm 2: Create a period of 1 ms and various duty cycles
      pwm #(16,  100000)
      wave2(
-          .clk(clk),     //Name of var in the submodule and what you want to send in the parenthesis.
-          .duty(duty),
+          .CLOCK(clk),     //Name of var in the submodule and what you want to send in the parenthesis.
+          .duty(duty)),
           .pulse(pulse[1])
      );
      
