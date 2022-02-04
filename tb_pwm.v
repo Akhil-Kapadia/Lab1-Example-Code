@@ -5,6 +5,12 @@ Pulse Width Modulation TestBench
 -------------------------------------------------------
 Instantiates the "pwm" module from "pwm.v" and creates several wayforms of varying
 periods and duty cycles.
+
+Run these lines in console to simulate. Click on tb_pwm.vcd to see the waveform.
+iverilog -o pwm tb_pwm.v
+vvp pwm
+
+Requires having installed iverilog (Windows: https://bleyer.org/icarus/) and the "WaveTrace" extension in VSCode.
 -------------------------------------------------------
 Author : Akhil Kapadia
 -------------------------------------------------------
