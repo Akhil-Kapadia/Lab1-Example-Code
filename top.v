@@ -10,7 +10,7 @@ Author : Akhil Kapadia
 -------------------------------------------------------
 */
 
-module main (
+module top (
     input clk,
     input [4:0] sw,
     output [1:0] pwm
